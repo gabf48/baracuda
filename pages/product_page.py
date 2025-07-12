@@ -1,6 +1,7 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from unicodedata import category
 
 from utils.excel_writer import ExcelWriter
 
@@ -26,7 +27,9 @@ class ProductPage:
             images_links = self.extract_images_links()
             self.excel.write_image_links(images_links, index)
             description = self.extract_description()
+            typ_mulineta = self.map_category_to_excel_value()
             self.excel.write_details(sku, name, description, index)
+            self.excel.complete_typ_mulineta(typ_mulineta, index)
 
             self.driver.back()
             print()
@@ -58,5 +61,24 @@ class ProductPage:
         description = self.driver.find_element(By.CSS_SELECTOR, '[class="rte"]').text
         print(f'Description = {description}')
         return description
+
+    def map_category_to_excel_value(self):
+        text = self.driver.find_element(By.CSS_SELECTOR,'#categories_block_left > h2').text
+
+        if "CRAP" in text:
+            return "Crap"
+        elif "MATCH" in text:
+            return "Spinning"
+        elif "FEEDER" in text:
+            return "Feeder"
+        elif "SPINNING" in text:
+            return "Spinning"
+        elif "BOLOGNESE" in text:
+            return "Bolognese"
+        elif "MUSCA" in text:
+            return "Musca"
+        else:
+            return None
+
 
 

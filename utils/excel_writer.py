@@ -27,3 +27,9 @@ class ExcelWriter:
         for i in range(min(len(links), max_cols)):
             self.sheet.cell(row=row, column=base_col + i).value = links[i]
         self.wb.save(self.file_path)
+
+    def complete_typ_mulineta(self, typ, index):
+        row = self.start_row + index
+        self.sheet.cell(row=row, column=31).value = typ
+        self.wb.save(self.file_path)
+
