@@ -19,8 +19,8 @@ class ProductPage:
 
             self.extract_title()
             self.extract_sku()
-            self.extract_valid_links()
-
+            self.extract_images_links()
+            self.extract_description()
 
             self.driver.back()
             print()
@@ -35,12 +35,16 @@ class ProductPage:
         sku = self.driver.find_element(By.CSS_SELECTOR, '[itemprop="sku"]').text
         print(f"SKU = {sku}")
 
-    def extract_valid_links(self):
+    def extract_images_links(self):
         links = self.driver.find_elements(By.CSS_SELECTOR, '.MagicToolboxSelectorsContainer a')
 
         for link in links:
             href = link.get_attribute("href")
             if href and href.strip().lower().endswith(".jpg"):
                 print(href)
+
+    def extract_description(self):
+        description = self.driver.find_element(By.CSS_SELECTOR, '[class="rte"]').text
+        print(f'Description = {description}')
 
 
