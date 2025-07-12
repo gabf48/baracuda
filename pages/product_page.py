@@ -21,11 +21,11 @@ class ProductPage:
             WebDriverWait(self.driver, 10).until(
                 EC.presence_of_element_located((By.CSS_SELECTOR, '.primary_block [itemprop="name"]')))
 
-            self.extract_title()
+            name = self.extract_title()
             sku = self.extract_sku()
-            self.excel.write_sku(sku, index)
             self.extract_images_links()
             self.extract_description()
+            self.excel.write_details(sku, name, index)
 
             self.driver.back()
             print()
@@ -35,6 +35,7 @@ class ProductPage:
     def extract_title(self):
         title = self.driver.find_element(By.CSS_SELECTOR, '.primary_block [itemprop="name"]').text
         print(f"Title is = {title}")
+        return title
 
     def extract_sku(self):
         sku = self.driver.find_element(By.CSS_SELECTOR, '[itemprop="sku"]').text
