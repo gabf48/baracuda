@@ -23,7 +23,8 @@ class ProductPage:
 
             name = self.extract_title()
             sku = self.extract_sku()
-            self.extract_images_links()
+            images_links = self.extract_images_links()
+            self.excel.write_image_links(images_links, index)
             description = self.extract_description()
             self.excel.write_details(sku, name, description, index)
 
@@ -43,12 +44,15 @@ class ProductPage:
         return sku
 
     def extract_images_links(self):
-        links = self.driver.find_elements(By.CSS_SELECTOR, '.MagicToolboxSelectorsContainer a')
+        links_elements = self.driver.find_elements(By.CSS_SELECTOR, '.MagicToolboxSelectorsContainer a')
+        links = []
 
-        for link in links:
+        for link in links_elements:
             href = link.get_attribute("href")
             if href and href.strip().lower().endswith(".jpg"):
-                print(href)
+                links.append(href)
+
+        return links
 
     def extract_description(self):
         description = self.driver.find_element(By.CSS_SELECTOR, '[class="rte"]').text
