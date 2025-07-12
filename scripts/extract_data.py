@@ -13,6 +13,3 @@ if __name__ == "__main__":
         "https://baracuda.ro/14-mulinete-crap")
     pagination.show_all_products()
     product_page.click_each_product_and_return()
-
-    input("Apasă Enter pentru a închide browserul...")
-
