@@ -2,9 +2,13 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
+from utils.excel_writer import ExcelWriter
+
+
 class ProductPage:
     def __init__(self, driver):
         self.driver = driver
+        self.excel = ExcelWriter("data.xlsx")
 
     def click_each_product_and_return(self):
         product_elements = self.driver.find_elements(By.CSS_SELECTOR, '.product-container .product-name')
@@ -18,7 +22,8 @@ class ProductPage:
                 EC.presence_of_element_located((By.CSS_SELECTOR, '.primary_block [itemprop="name"]')))
 
             self.extract_title()
-            self.extract_sku()
+            sku = self.extract_sku()
+            self.excel.write_sku(sku, index)
             self.extract_images_links()
             self.extract_description()
 
@@ -34,6 +39,7 @@ class ProductPage:
     def extract_sku(self):
         sku = self.driver.find_element(By.CSS_SELECTOR, '[itemprop="sku"]').text
         print(f"SKU = {sku}")
+        return sku
 
     def extract_images_links(self):
         links = self.driver.find_elements(By.CSS_SELECTOR, '.MagicToolboxSelectorsContainer a')
