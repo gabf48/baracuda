@@ -24,8 +24,8 @@ class ProductPage:
             name = self.extract_title()
             sku = self.extract_sku()
             self.extract_images_links()
-            self.extract_description()
-            self.excel.write_details(sku, name, index)
+            description = self.extract_description()
+            self.excel.write_details(sku, name, description, index)
 
             self.driver.back()
             print()
@@ -53,5 +53,6 @@ class ProductPage:
     def extract_description(self):
         description = self.driver.find_element(By.CSS_SELECTOR, '[class="rte"]').text
         print(f'Description = {description}')
+        return description
 
 
