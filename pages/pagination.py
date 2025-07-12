@@ -6,5 +6,5 @@ class Pagination:
 
     def show_all_products(self):
         product_elements = self.driver.find_elements(By.CSS_SELECTOR, '.product-container .product-name')
-        if product_elements.len > 12:
+        if len(product_elements) > 12:
             self.driver.find_element(By.CSS_SELECTOR,'#pagination [type="submit"]').click()
