@@ -10,6 +10,6 @@ if __name__ == "__main__":
     product_page = ProductPage(driver)
 
     base_page.navigate_and_accept_cookies(
-        "https://baracuda.ro/14-mulinete-crap")
+        "https://baracuda.ro/16-mulinete-match")
     pagination.show_all_products()
     product_page.click_each_product_and_return()
